@@ -11,10 +11,11 @@ import java.util.Random;
 public class MyAgent implements Agent {
 
     private World w;
-    int rnd;
-
+    
+    // Get the QTable instance.
     private double[][] Q = QTable.getInstance();
 
+    // Current position on the map.
     private int currentPos;
 
     /**
@@ -41,42 +42,34 @@ public class MyAgent implements Agent {
         // Execute the selected action
         executeAction(action);
 
-        
-
-        // Take the action, and observe the reward, r, as well as the new state, s'.
+        // Take the action and get the reward
         int newPos = currentPos;
         double reward = Q[oldPos][0];
-
-        double learningRate = 0.5;
-        double discountFactor = 0.9;
+        
+        // Get the max Q-value of the new position.
         double maxQValueOfNextState = QTable.getMaxQValue(newPos);
-        // Update the Q-value for the state using the observed reward and the maximum reward possible for the next state. 
-        Q[oldPos][action] = Q[oldPos][action] + learningRate * (reward + (discountFactor * maxQValueOfNextState) - Q[oldPos][action]);
         
-        
-        // Debug
-        int ox = w.getPlayerX();
-        int oy = w.getPlayerY();
+        // Update the Q-table, specifically the old State-action value. 
+        Q[oldPos][action] = Q[oldPos][action] + QConfig.LEARNINGRATE * (reward + (QConfig.DISCOUNTFACTOR * maxQValueOfNextState) - Q[oldPos][action]);
         
     }
 
+    // This method will select an action, and based on some set probability it will take a random action instead to provide some form of exploration.
     public int selectAction() {
-        
         Random rand = new Random();
-        if (Math.random() < 0.5) {
-            // Select a random action
+        if (Math.random() < QConfig.PROBABILITY) {
             return rand.nextInt(4) + 1;
         } else {
             return QTable.getMaxQValueAction(currentPos);
         }
 
     }
-
+    
+    // Executes the selected action.
     public void executeAction(int action) {
         
         // Check for pits, gold, wumpus
         checkState();
-        
         
         //Location of the player
         int x = w.getPlayerX();
@@ -208,13 +201,13 @@ public class MyAgent implements Agent {
         int y = w.getPlayerY();
         if (w.gameOver()) {
             if (w.hasWumpus(x, y)) {
-                Q[currentPos][0] = -1.0;
+                Q[currentPos][0] = QConfig.WUMPUSREWARD;
             }
         } else if (w.hasGlitter(x, y)) {
-            Q[currentPos][0] = 1.0;
+            Q[currentPos][0] = QConfig.GOLDREWARD;
             w.doAction(World.A_GRAB);
         } else if (w.hasPit(x, y)) {
-            Q[currentPos][0] = -1.0;
+            Q[currentPos][0] = QConfig.PITREWARD;
             w.doAction(World.A_CLIMB);
         }
     }
@@ -241,88 +234,11 @@ public class MyAgent implements Agent {
             System.out.println("Win win win!");
             w.doAction(World.A_GRAB);
         } else if (w.hasPit(x, y)) {
-            System.out.println("Shouldn't be here...");
+            System.out.println("Shouldn't be here... Unless there's no other way.");
             
         }
 
     }
-
-    
-    public void doAction2() {
-
-        //Location of the player
-        int cX = w.getPlayerX();
-        int cY = w.getPlayerY();
-
-        System.out.println("X-LOCATION: " + cX);
-        System.out.println("Y-LOCATION: " + cY);
-
-        //Basic action:
-        //Grab Gold if we can.
-        if (w.hasGlitter(cX, cY)) {
-            w.doAction(World.A_GRAB);
-            return;
-        }
-
-        //Basic action:
-        //We are in a pit. Climb up.
-        if (w.isInPit()) {
-            w.doAction(World.A_CLIMB);
-            return;
-        }
-
-        //Test the environment
-        if (w.hasBreeze(cX, cY)) {
-            System.out.println("I am in a Breeze");
-        }
-        if (w.hasStench(cX, cY)) {
-            System.out.println("I am in a Stench");
-        }
-        if (w.hasPit(cX, cY)) {
-            System.out.println("I am in a Pit");
-        }
-        if (w.getDirection() == World.DIR_RIGHT) {
-            System.out.println("I am facing Right");
-        }
-        if (w.getDirection() == World.DIR_LEFT) {
-            System.out.println("I am facing Left");
-        }
-        if (w.getDirection() == World.DIR_UP) {
-            System.out.println("I am facing Up");
-        }
-        if (w.getDirection() == World.DIR_DOWN) {
-            System.out.println("I am facing Down");
-        }
-
-        //decide next move
-        rnd = decideRandomMove();
-        if (rnd == 0) {
-            w.doAction(World.A_TURN_LEFT);
-            w.doAction(World.A_MOVE);
-        }
-
-        if (rnd == 1) {
-            w.doAction(World.A_MOVE);
-        }
-
-        if (rnd == 2) {
-            w.doAction(World.A_TURN_LEFT);
-            w.doAction(World.A_TURN_LEFT);
-            w.doAction(World.A_MOVE);
-        }
-
-        if (rnd == 3) {
-            w.doAction(World.A_TURN_RIGHT);
-            w.doAction(World.A_MOVE);
-        }
-
-    }
      
-    /**
-     * Genertes a random instruction for the Agent.
-     */
-    public int decideRandomMove() {
-        return (int) (Math.random() * 4);
-    }
 
 }

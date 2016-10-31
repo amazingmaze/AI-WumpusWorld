@@ -183,7 +183,7 @@ public class GUI implements ActionListener
         
         
         // Add training button
-        JButton trainbtn = new JButton("Train AI - 1000 iterations");
+        JButton trainbtn = new JButton("Train the agent!");
         trainbtn.setActionCommand("TRAINING");
         trainbtn.addActionListener(this);
         buttons.add(trainbtn);
@@ -277,31 +277,27 @@ public class GUI implements ActionListener
             }
             
             agent.doAction();
-            //agent.train();
             updateGame();
         }
         
         
-        // TRAINING 
+        // Train the agent to learn its own way around the map.
         if (e.getActionCommand().equals("TRAINING"))
         {         
-            int restarts = 0;
-            int trainingIterations = 100000;
+            int trainingIterations = QConfig.ITERATIONS;
             if (agent == null)
             {
-                // Create a KB file
                 agent = new MyAgent(w);
+                System.out.println("Training.. Please wait.");
                 for(int i = 0; i < trainingIterations; i++){      
                     agent.train();
                     updateGame();           
                     if(w.gameOver()){
                         restartGame();
-                        restarts++;
                     }
                 }
                 restartGame();
-                System.out.println("NUMBER OF RESTARTS: " + restarts);
-                System.out.println("Printing table \n _______________ ");
+                System.out.println("Finished learning!");
                 QTable.printQTable();
             }    
         }
