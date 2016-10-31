@@ -1,4 +1,5 @@
 # Assignment - Wumpus World
+*This is an assignment for the Artifical Intelligence course on Blekinge Tekniska Högskola. The original application is written by Johan Hagelbäck and the assignment is to implement an agent which can solve the program using one of a few strategies.* 
 The wumpus world is a very used and researched problem in artificial intelligence. It’s used in problems like knowledge representation, Reasoning and Planning. It is hide and seek type of problem where the player will go into a cave (a grid pattern type of map) and try to find the gold. In his way, there are pits and a monster called the Wumpus. 
 
 
