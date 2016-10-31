@@ -35,10 +35,10 @@ public class MyAgent implements Agent {
         // Keep old position.
         int oldPos = currentPos;
 
-        // Select an action 
+        // Select an action.
         int action = selectAction();
         
-        // Execute the selected action
+        // Execute the selected action.
         executeAction(action);
 
         // Take the action and get the reward
