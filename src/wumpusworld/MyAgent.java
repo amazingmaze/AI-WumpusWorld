@@ -57,8 +57,6 @@ public class MyAgent implements Agent {
         // Debug
         int ox = w.getPlayerX();
         int oy = w.getPlayerY();
-        System.out.println("Current Pos: \n--X: " + ox + " & Y: " + oy + "\n--Square: " + currentPos );
-        System.out.println("Moved from this square: " + oldPos);
         
     }
 
@@ -111,8 +109,6 @@ public class MyAgent implements Agent {
                         break;
                 }
             } else {
-                System.out.println("New x pos: " + x + 1 + " is not valid");
-                System.out.println("Current pos is: " + currentPos);
             }
 
         }
@@ -143,8 +139,6 @@ public class MyAgent implements Agent {
                 }
                 currentPos = x * 10 + (y - 1);
             } else {
-                System.out.println("New y pos: " + (y - 1) + " is not valid");
-                System.out.println("Current pos is: " + currentPos);
             }
 
         }
@@ -175,8 +169,6 @@ public class MyAgent implements Agent {
                 }
                 currentPos = (x - 1) * 10 + y;
             } else {
-                System.out.println("New x pos: " + (x - 1) + " is not valid");
-                System.out.println("Current pos is: " + currentPos);
             }
 
         }
@@ -206,8 +198,6 @@ public class MyAgent implements Agent {
                 }
                 currentPos = x * 10 + (y + 1);
             } else {
-                System.out.println("New y pos: " + y + 1 + " is not valid");
-                System.out.println("Current pos is: " + currentPos);
             }             
         }
 
@@ -232,31 +222,33 @@ public class MyAgent implements Agent {
     /**
      * Asks your solver agent to execute an action.
      */
-    public void doAction2() {
+    @Override
+    public void doAction() {
 
         int action = QTable.getMaxQValueAction(currentPos);
         
         System.out.println("Q-learning said that Q[" + currentPos + "] had the best value of: " + Q[currentPos][action]);
-        
+        System.out.println("Executing action: " + action);
         executeAction(action);
 
         int x = w.getPlayerX();
         int y = w.getPlayerY();
 
-        if (w.gameOver()) {
-            System.out.println("Game over...");
-        } else if (w.hasGlitter(x, y)) {
+        if (w.hasWumpus(x, y)) {
+            System.out.println("Wumpus is here");
+        } 
+        else if (w.hasGlitter(x, y)) {
             System.out.println("Win win win!");
             w.doAction(World.A_GRAB);
         } else if (w.hasPit(x, y)) {
             System.out.println("Shouldn't be here...");
-            w.doAction(World.A_CLIMB);
+            
         }
 
     }
 
     
-    public void doAction() {
+    public void doAction2() {
 
         //Location of the player
         int cX = w.getPlayerX();
