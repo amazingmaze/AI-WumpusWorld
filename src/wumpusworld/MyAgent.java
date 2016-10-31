@@ -31,9 +31,8 @@ public class MyAgent implements Agent {
     }
 
     @Override
-    public void train() {
-        
-        // Keep old position
+    public void train() {       
+        // Keep old position.
         int oldPos = currentPos;
 
         // Select an action 
