@@ -29,6 +29,7 @@ public class MyAgent implements Agent {
 
     }
 
+    @Override
     public void train() {
         
         // Keep old position
@@ -62,6 +63,7 @@ public class MyAgent implements Agent {
     }
 
     public int selectAction() {
+        
         Random rand = new Random();
         if (Math.random() < 0.5) {
             // Select a random action
@@ -69,6 +71,7 @@ public class MyAgent implements Agent {
         } else {
             return QTable.getMaxQValueAction(currentPos);
         }
+
     }
 
     public void executeAction(int action) {
@@ -80,8 +83,7 @@ public class MyAgent implements Agent {
         //Location of the player
         int x = w.getPlayerX();
         int y = w.getPlayerY();
-        
-        
+               
 
         // Right
         if (action == 1) {
@@ -105,7 +107,8 @@ public class MyAgent implements Agent {
                     w.doAction(World.A_MOVE);
                 }
             } else {
-
+                System.out.println("New x pos: " + x + 1 + " is not valid");
+                System.out.println("Current pos is: " + currentPos);
             }
 
         }
@@ -132,7 +135,8 @@ public class MyAgent implements Agent {
                 }
                 currentPos = x * 10 + (y - 1);
             } else {
-
+                System.out.println("New y pos: " + (y - 1) + " is not valid");
+                System.out.println("Current pos is: " + currentPos);
             }
 
         }
@@ -159,7 +163,8 @@ public class MyAgent implements Agent {
                 }
                 currentPos = (x - 1) * 10 + y;
             } else {
-
+                System.out.println("New x pos: " + (x - 1) + " is not valid");
+                System.out.println("Current pos is: " + currentPos);
             }
 
         }
@@ -167,25 +172,30 @@ public class MyAgent implements Agent {
         if (action == 4) {
             if (w.isValidPosition(x, y + 1)) {
                 
-                if (w.getDirection() == World.DIR_RIGHT) {
-                    w.doAction(World.A_TURN_LEFT);
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_DOWN) {
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_LEFT) {
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_UP) {
-                    w.doAction(World.A_MOVE);
+                switch (w.getDirection()) {
+                    case World.DIR_RIGHT:
+                        w.doAction(World.A_TURN_LEFT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_DOWN:
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_LEFT:
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_UP:
+                        w.doAction(World.A_MOVE);
+                        break;
+                    default:
+                        break;
                 }
                 currentPos = x * 10 + (y + 1);
             } else {
-
+                System.out.println("New y pos: " + y + 1 + " is not valid");
+                System.out.println("Current pos is: " + currentPos);
             }             
         }
 
