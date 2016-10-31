@@ -25,7 +25,7 @@ public class MyAgent implements Agent {
      */
     public MyAgent(World world) {
         w = world;
-
+        // Set to starting position
         currentPos = 11;
 
     }
@@ -54,7 +54,7 @@ public class MyAgent implements Agent {
         
     }
 
-    // This method will select an action, and based on some set probability it will take a random action instead to provide some form of exploration.
+    // This method will select an action, and based on some set probability it will take a random action instead which forces exploration.
     public int selectAction() {
         Random rand = new Random();
         if (Math.random() < QConfig.PROBABILITY) {
@@ -195,18 +195,22 @@ public class MyAgent implements Agent {
         }
 
     }
-
+    
+    // Used to check if the current square has either a wumpus, pit or gold in it.
     public void checkState() {
         int x = w.getPlayerX();
         int y = w.getPlayerY();
         if (w.gameOver()) {
             if (w.hasWumpus(x, y)) {
+                // Set the Reward for the currentPos 
                 Q[currentPos][0] = QConfig.WUMPUSREWARD;
             }
         } else if (w.hasGlitter(x, y)) {
+            // Set the Reward for the currentPos 
             Q[currentPos][0] = QConfig.GOLDREWARD;
             w.doAction(World.A_GRAB);
         } else if (w.hasPit(x, y)) {
+            // Set the Reward for the currentPos 
             Q[currentPos][0] = QConfig.PITREWARD;
             w.doAction(World.A_CLIMB);
         }
@@ -218,11 +222,13 @@ public class MyAgent implements Agent {
      */
     @Override
     public void doAction() {
-
+        
+        // Get the best action from the current state.
         int action = QTable.getMaxQValueAction(currentPos);
         
         System.out.println("Q-learning said that Q[" + currentPos + "] had the best value of: " + Q[currentPos][action]);
         System.out.println("Executing action: " + action);
+        // Run the aciton
         executeAction(action);
 
         int x = w.getPlayerX();
@@ -232,6 +238,7 @@ public class MyAgent implements Agent {
             System.out.println("Wumpus is here");
         } 
         else if (w.hasGlitter(x, y)) {
+            // If we found gold, we win.
             System.out.println("Win win win!");
             w.doAction(World.A_GRAB);
         } else if (w.hasPit(x, y)) {

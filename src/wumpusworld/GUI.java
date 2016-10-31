@@ -273,6 +273,7 @@ public class GUI implements ActionListener {
         if (e.getActionCommand().equals("TRAINING")) {
 
             if (agent == null) {
+                // Keep the seed so we can restart the same random map.
                 int seed = (int) System.currentTimeMillis();
                 startMap(seed);
                 agent = new MyAgent(w);
@@ -288,11 +289,12 @@ public class GUI implements ActionListener {
                 // One last restart to end the training session
                 startMap(seed);
                 System.out.println("Finished learning!");
-                QTable.printQTable();
+                
+                //QTable.printQTable();
             }
         }
     }
-
+    // Method for starting and restarting maps.
     private void startMap(int seed) {
         String s = (String) mapList.getSelectedItem();
         if (s.equalsIgnoreCase("Random")) {
@@ -304,17 +306,6 @@ public class GUI implements ActionListener {
         }
         agent = new MyAgent(w);
         updateGame();
-    }
-
-    private void startMap2() {
-
-        String s = (String) mapList.getSelectedItem();
-        int i = Integer.parseInt(s);
-        i--;
-        w = maps.get(i).generateWorld();
-        agent = new MyAgent(w);
-        updateGame();
-
     }
 
     /**
