@@ -105,7 +105,7 @@ public class MyAgent implements Agent {
             }
 
         }
-        // South
+        // Up
         if (action == 2) {
 
             if (w.isValidPosition(x, y - 1)) {
@@ -165,7 +165,7 @@ public class MyAgent implements Agent {
             }
 
         }
-        // North
+        // Down
         if (action == 4) {
             if (w.isValidPosition(x, y + 1)) {
                 
