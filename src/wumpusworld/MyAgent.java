@@ -90,21 +90,25 @@ public class MyAgent implements Agent {
 
             if (w.isValidPosition(x + 1, y)) {
                 currentPos = (x + 1) * 10 + y;
-                if (w.getDirection() == World.DIR_RIGHT) {
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_DOWN) {
-                    w.doAction(World.A_TURN_LEFT);
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_LEFT) {
-                    w.doAction(World.A_TURN_LEFT);
-                    w.doAction(World.A_TURN_LEFT);
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_UP) {
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_MOVE);
+                switch (w.getDirection()) {
+                    case World.DIR_RIGHT:
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_DOWN:
+                        w.doAction(World.A_TURN_LEFT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_LEFT:
+                        w.doAction(World.A_TURN_LEFT);
+                        w.doAction(World.A_TURN_LEFT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_UP:
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    default:
+                        break;
                 }
             } else {
                 System.out.println("New x pos: " + x + 1 + " is not valid");
@@ -117,21 +121,25 @@ public class MyAgent implements Agent {
 
             if (w.isValidPosition(x, y - 1)) {
                 
-                if (w.getDirection() == World.DIR_RIGHT) {
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_DOWN) {
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_LEFT) {
-                    w.doAction(World.A_TURN_LEFT);
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_UP) {
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_MOVE);
+                switch (w.getDirection()) {
+                    case World.DIR_RIGHT:
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_DOWN:
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_LEFT:
+                        w.doAction(World.A_TURN_LEFT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_UP:
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    default:
+                        break;
                 }
                 currentPos = x * 10 + (y - 1);
             } else {
@@ -145,21 +153,25 @@ public class MyAgent implements Agent {
 
             if (w.isValidPosition(x - 1, y)) {
                 
-                if (w.getDirection() == World.DIR_RIGHT) {
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_DOWN) {
-                    w.doAction(World.A_TURN_RIGHT);
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_LEFT) {
-                    w.doAction(World.A_MOVE);
-                }
-                if (w.getDirection() == World.DIR_UP) {
-                    w.doAction(World.A_TURN_LEFT);
-                    w.doAction(World.A_MOVE);
+                switch (w.getDirection()) {
+                    case World.DIR_RIGHT:
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_DOWN:
+                        w.doAction(World.A_TURN_RIGHT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_LEFT:
+                        w.doAction(World.A_MOVE);
+                        break;
+                    case World.DIR_UP:
+                        w.doAction(World.A_TURN_LEFT);
+                        w.doAction(World.A_MOVE);
+                        break;
+                    default:
+                        break;
                 }
                 currentPos = (x - 1) * 10 + y;
             } else {
