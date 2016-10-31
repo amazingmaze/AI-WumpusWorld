@@ -225,8 +225,6 @@ public class MyAgent implements Agent {
         // Get the best action from the current state.
         int action = QTable.getMaxQValueAction(currentPos);
         
-        System.out.println("Q-learning said that Q[" + currentPos + "] had the best value of: " + Q[currentPos][action]);
-        System.out.println("Executing action: " + action);
         // Run the aciton
         executeAction(action);
 
