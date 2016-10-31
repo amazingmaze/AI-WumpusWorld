@@ -210,6 +210,7 @@ public class MyAgent implements Agent {
             Q[currentPos][0] = QConfig.PITREWARD;
             w.doAction(World.A_CLIMB);
         }
+        
     }
 
     /**
