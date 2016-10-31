@@ -1,4 +1,4 @@
-# Assignment 1 - Wumpus World
+# Assignment - Wumpus World
 The wumpus world is a very used and researched problem in artificial intelligence. It’s used in problems like knowledge representation, Reasoning and Planning. It is hide and seek type of problem where the player will go into a cave (a grid pattern type of map) and try to find the gold. In his way, there are pits and a monster called the Wumpus. 
 
 
