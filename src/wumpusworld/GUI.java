@@ -276,8 +276,8 @@ public class GUI implements ActionListener
                 agent = new MyAgent(w);
             }
             
-            //agent.doAction();
-            agent.train();
+            agent.doAction();
+            //agent.train();
             updateGame();
         }
         
