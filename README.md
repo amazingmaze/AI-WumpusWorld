@@ -5,6 +5,7 @@ The wumpus world is a very used and researched problem in artificial intelligenc
 
 
 ## Solution
+(NOTE: THIS IS IN NO WAY AN OPTIMIZED VERSION. YOU CAN MOST CERTAINLY REDUCE THE NUMBER OF ITERATIONS, AS WELL AS CHANGE THE ACTION SELECTION TO A E-GREEDY OR SIMILAR METHOD. CURRENTLY IT WILL EXPLORE 20% OF THE TIME.)
 This solution could be done in several ways. In this solution, machine learning is used. Specifically reinforcement learning and the Q-learning algorithm. 
 Some notes about the Q-learning implementation in this solution:
 
